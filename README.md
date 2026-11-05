@@ -159,6 +159,12 @@ La integración con Make se probó mediante un túnel temporal.
 Para repetirla, es necesario iniciar el túnel y configurar
 su dirección vigente en el módulo HTTP de Make.
 
+## Documentación
+
+Los apuntes se organizan en la carpeta `docs`.
+
+- [Día 22: Git fundamental](docs/dia22.md)
+
 ## Estado del repositorio
 
 Proyecto de aprendizaje en desarrollo, con datos ficticios
