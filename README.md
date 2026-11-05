@@ -163,6 +163,8 @@ su dirección vigente en el módulo HTTP de Make.
 
 Los apuntes se organizan en la carpeta `docs`.
 
+- [Día 20: polling y webhooks](docs/dia20.md)
+
 - [Día 22: Git fundamental](docs/dia22.md)
 
 ## Estado del repositorio
