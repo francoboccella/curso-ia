@@ -1,14 +1,33 @@
-# curso de ia y automatizacion 
+# Curso de IA y automatización
 
-## dia 1
-prepare el entorno y cree mi primer programa en python
-registre dos verciones con git y las subi a github
-## como ejecutar el programa 
-desde CMD, dentro de la carpeta curso-ia:
+Repositorio de mis prácticas de formación en Python, procesamiento de datos, APIs y automatización.
+
+## Herramientas utilizadas
+
+- Python.
+- pandas.
+- requests.
+- Flask.
+- Git y GitHub.
+- Postman y Make para las pruebas de integración.
+
+## Primer programa: día 1
+
+Preparé el entorno y creé mi primer programa en Python.
+Registré versiones con Git y las subí a GitHub.
+
+### Cómo ejecutarlo
+
+Desde CMD, dentro de la carpeta `curso-ia`:
+
+```bat
 python hola.py
+```
+
 ## Procesamiento de solicitudes: día 13
 
 El programa `dia13.py`:
+
 - Lee solicitudes desde un CSV.
 - Normaliza espacios y mayúsculas.
 - Completa prioridades faltantes con `revisar`.
@@ -21,9 +40,18 @@ El programa `dia13.py`:
 
 Python y pandas instalados.
 
+Para instalar pandas:
+
+```bat
+python -m pip install pandas
+```
+
 El archivo `solicitudes_sucias.csv` debe estar en la carpeta
 desde la que se ejecuta el programa, con estas columnas:
-`cliente`, `tipo` y `prioridad`.
+
+- `cliente`.
+- `tipo`.
+- `prioridad`.
 
 ### Cómo ejecutarlo
 
@@ -36,7 +64,66 @@ python dia13.py
 ### Resultado
 
 Se genera `solicitudes_procesadas.json`.
+
 Contiene una lista de solicitudes con los campos:
 `cliente`, `tipo`, `prioridad` y `accion`.
 
 El programa vuelve a leer el JSON para comprobar su contenido.
+
+## Integración con una API: día 21
+
+El programa `dia21.py` utiliza Flask para recibir solicitudes
+mediante un POST a la ruta `/validar`.
+
+Comprueba que estén presentes las claves `id`, `cliente` y `servicio`.
+
+- Si están las tres claves, responde con estado 200 y `{"ok": true}`.
+- Si falta una clave, responde con estado 400 y un mensaje de error.
+
+### Requisitos
+
+Python y Flask instalados.
+
+Para instalar Flask:
+
+```bat
+python -m pip install Flask
+```
+
+### Cómo iniciar la API
+
+Desde CMD, dentro de `curso-ia`:
+
+```bat
+python dia21.py
+```
+
+Dejar esa ventana abierta mientras se realizan las pruebas.
+
+En Postman, enviar un POST a:
+
+```text
+http://127.0.0.1:5000/validar
+```
+
+En Body, seleccionar raw y JSON. Ejemplo de solicitud:
+
+```json
+{
+  "id": "SOL-004",
+  "cliente": "Alan",
+  "servicio": "trenzas"
+}
+```
+
+La integración con Make se probó mediante un túnel temporal.
+Para repetirla, es necesario iniciar el túnel y configurar
+su dirección vigente en el módulo HTTP de Make.
+
+## Estado del repositorio
+
+Proyecto de aprendizaje en desarrollo, con datos ficticios
+y ejemplos de práctica.
+
+No incluir tokens, credenciales ni URLs operativas de webhooks
+en los archivos publicados.
