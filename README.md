@@ -70,6 +70,45 @@ Contiene una lista de solicitudes con los campos:
 
 El programa vuelve a leer el JSON para comprobar su contenido.
 
+## Consultar una API desde Python: día 18
+
+El programa `dia18.py` envía una petición GET a Postman Echo
+con los parámetros `fecha` y `servicio` en la URL.
+
+Postman Echo devuelve los datos recibidos para comprobar el envío.
+
+### Requisitos
+
+Python y la biblioteca requests instalados.
+
+Para instalar requests, ejecutar en CMD:
+
+```bat
+python -m pip install requests
+```
+
+### Cómo ejecutarlo
+
+Desde CMD, dentro de la carpeta `curso-ia`:
+
+```bat
+python dia18.py
+```
+
+### Resultado esperado
+
+El programa muestra el código de estado y el contenido de la respuesta.
+
+Si recibe el código 200, también muestra:
+
+- La URL con los parámetros enviados.
+- El servicio: `trenzas`.
+- La fecha: `2026-11-02`.
+
+Si recibe otro código, muestra `Código recibido:` y su valor.
+
+La petición tiene un tiempo de espera configurado de 10 segundos.
+
 ## Integración con una API: día 21
 
 El programa `dia21.py` utiliza Flask para recibir solicitudes
