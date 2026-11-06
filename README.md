@@ -77,6 +77,8 @@ con los parámetros `fecha` y `servicio` en la URL.
 
 Postman Echo devuelve los datos recibidos para comprobar el envío.
 
+Esta consulta es solo una prueba de envío de datos y no crea ningún turno.
+
 ### Requisitos
 
 Python y la biblioteca requests instalados.
