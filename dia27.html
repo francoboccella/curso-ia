@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Solicitud de turno</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f2fa;
+            margin: 32px 16px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            max-width: 360px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 12px;
+            display: grid;
+            gap: 10px;
+        }
+
+        input, select, button {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #6941a5;
+            color: white;
+            border: 0;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Solicitud de turno</h1>
+
+    <form id="formulario-turno">
+        <label for="cliente">Nombre</label>
+        <input type="text" id="cliente" name="cliente" required>
+
+        <label for="servicio">Servicio</label>
+        <select id="servicio" name="servicio" required>
+            <option value="">Elegí un servicio</option>
+            <option value="trenzas">Trenzas</option>
+            <option value="alisado">Alisado</option>
+        </select>
+
+        <button type="submit">Enviar solicitud</button>
+    </form>
+
+    <p id="resultado"></p>
+
+    <script>
+    const formulario = document.getElementById("formulario-turno");
+    const resultado = document.getElementById("resultado");
+
+    formulario.addEventListener("submit", async function (evento) {
+        evento.preventDefault();
+
+        const webhook = prompt("Pegá la URL de tu webhook de prueba:");
+
+        if (!webhook || !webhook.trim()) {
+            resultado.textContent = "Envío cancelado.";
+            return;
+        }
+
+        const cliente = document.getElementById("cliente").value;
+        const servicio = document.getElementById("servicio").value;
+        const datos = new URLSearchParams({ cliente, servicio });
+
+        resultado.textContent = "Enviando…";
+
+        try {
+            await fetch(webhook.trim(), {
+                method: "POST",
+                mode: "no-cors",
+                body: datos
+            });
+
+            resultado.textContent = "Solicitud enviada. Verificá la recepción en Make.";
+        } catch (error) {
+            resultado.textContent = "El navegador no pudo completar el envío.";
+        }
+    });
+</script>
+</body>
+</html>
