@@ -1,0 +1,105 @@
+{
+  "name": "Día 29 - Primer flujo y expresiones",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "2f120fdc-1fad-4448-993f-f7514c1b2710",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0179f97d-660c-4857-8527-85c945e10593",
+              "name": "cliente",
+              "value": "Dayana",
+              "type": "string"
+            },
+            {
+              "id": "f1218aed-677c-4f29-90ed-693989e2c326",
+              "name": "servicio",
+              "value": "alisado",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "de7cdc50-b1e6-435e-b873-1fcb3b29279d",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "92a8d09e-5644-4cdd-aa5a-7a244c8d108f",
+              "name": "mensaje",
+              "value": "={{ \"Solicitud de \" + $json.cliente + \" para \" + $json.servicio }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        448,
+        0
+      ],
+      "id": "b0103380-e044-4893-9346-4b6cfce9077d",
+      "name": "Edit Fields1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "44e88cbc-b9cc-4775-8db0-073e1f7e8bfb",
+  "meta": {
+    "instanceId": "4e844c350dcdf9bacf8be0aa0e7d4c360341a9e282c9454dff85636e41b9fc5d"
+  },
+  "nodeGroups": [],
+  "id": "2wOgmGu0xdvQ02Wj",
+  "tags": []
+}
