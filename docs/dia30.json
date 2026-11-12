@@ -1,0 +1,125 @@
+{
+  "name": "Día 30 - Webhook y envío HTTP",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "dia30-webhook-demo",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "cecef312-7392-40cd-998c-6a8f8e82a186",
+      "name": "Webhook",
+      "webhookId": "dia30-webhook-demo"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5be58c33-cf93-46c0-97fc-389fe74adabd",
+              "name": "id",
+              "value": "={{ $json.body.id }}",
+              "type": "string"
+            },
+            {
+              "id": "f8a4ee50-76e2-4773-afe6-79a59cafd5fa",
+              "name": "cliente",
+              "value": "={{ $json.body.cliente }}",
+              "type": "string"
+            },
+            {
+              "id": "5ab67df7-9388-467c-83ec-659fcd3994a4",
+              "name": "servicio",
+              "value": "={{ $json.body.servicio }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "2ab139b7-3043-49ed-94d6-f7cbc30e8d3c",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://postman-echo.com/post",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "id",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "name": "cliente",
+              "value": "={{ $json.cliente }}"
+            },
+            {
+              "name": "servicio",
+              "value": "={{ $json.servicio }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        448,
+        0
+      ],
+      "id": "9e825f6b-c2d8-4574-8ac6-dbfa0edd7a0a",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "da899c2f-a3bc-4e24-a28f-6e0a1b046c2b",
+  "meta": {
+    "instanceId": "4e844c350dcdf9bacf8be0aa0e7d4c360341a9e282c9454dff85636e41b9fc5d"
+  },
+  "nodeGroups": [],
+  "id": "lxyKSXMZSL2Yki8t",
+  "tags": []
+}
