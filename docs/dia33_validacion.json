@@ -1,0 +1,238 @@
+{
+  "name": "Día 33 - Errores y datos incompletos",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4d366961-ddb8-4140-a37f-cb266a90110a",
+              "name": "cliente",
+              "value": "Franco",
+              "type": "string"
+            },
+            {
+              "id": "a13b0a8f-90f0-441f-b09d-3105dbafedd4",
+              "name": "servicio",
+              "value": "   alisado",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "be612ab2-708c-46e3-bd8c-6dd7f68fea9f",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "if (typeof $json.cliente !== \"string\") {\n    return {\n        json: {\n            ok: false,\n            error: \"El campo cliente falta o no es texto\"\n        }\n    };\n}\n\nif (typeof $json.servicio !== \"string\") {\n    return {\n        json: {\n            ok: false,\n            error: \"El campo servicio falta o no es texto\"\n        }\n    };\n}\n\nconst cliente = $json.cliente.trim().replace(/\\s+/g, \" \");\nconst servicio = $json.servicio.trim().toLowerCase();\n\nif (cliente === \"\") {\n    return {\n        json: {\n            ok: false,\n            error: \"El campo cliente está vacío\"\n        }\n    };\n}\n\nif (servicio === \"\") {\n    return {\n        json: {\n            ok: false,\n            error: \"El campo servicio está vacío\"\n        }\n    };\n}\n\nconst mensaje = \"Solicitud de \" + cliente + \" para \" + servicio;\n\nreturn {\n    json: {\n        ok: true,\n        cliente: cliente,\n        servicio: servicio,\n        mensaje: mensaje\n    }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        448,
+        0
+      ],
+      "id": "09b064bc-c2b1-4977-a00d-1a8790055c0c",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 4
+          },
+          "conditions": [
+            {
+              "id": "54f4ccb4-a10c-4190-b457-358d7a38f4a8",
+              "leftValue": "={{ $json.ok }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.4,
+      "position": [
+        672,
+        0
+      ],
+      "id": "f60d5905-f5f1-436f-ab85-45d9b74fc90c",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "throw new Error(\"Fallo de prueba del día 33\");"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        896,
+        -96
+      ],
+      "id": "5471dbe6-bbd3-43f9-ae03-d375302a640a",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "92405d7f-67b4-4ebf-9551-98ef5b5c3065",
+              "name": "ok",
+              "value": false,
+              "type": "boolean"
+            },
+            {
+              "id": "0669102b-36a8-409d-8c51-e2352e988f82",
+              "name": "accion",
+              "value": "Revisar fallo de ejecución",
+              "type": "string"
+            },
+            {
+              "id": "1d40ae02-1281-4015-b9cc-b3168c4e97b3",
+              "name": "detalle",
+              "value": "={{ $json.error }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1120,
+        0
+      ],
+      "id": "e3b25093-5195-41e6-9c69-6fb13732c658",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        32,
+        0
+      ],
+      "id": "8428abcf-3cf3-456c-b46b-66eeba78ae58",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "dia33-prueba-error",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        16,
+        -176
+      ],
+      "id": "05d1f487-b731-4a4d-8692-b17c6f8eaeec",
+      "name": "Webhook",
+      "webhookId": "de2e9175-6766-4479-8b26-ff5a3efe9a1b"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [],
+        []
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "errorWorkflow": "u0k6ZbN3ojQYTEgp",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "versionId": "2985d2b7-3aa8-4c5a-9a92-b625b25ec544",
+  "meta": {
+    "instanceId": "4e844c350dcdf9bacf8be0aa0e7d4c360341a9e282c9454dff85636e41b9fc5d"
+  },
+  "nodeGroups": [],
+  "id": "grU2tJ4FKyOzysCZ",
+  "tags": []
+}

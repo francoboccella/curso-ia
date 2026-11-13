@@ -1,0 +1,77 @@
+{
+  "name": "Día 33 - Registro de errores",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b7df8dea-839a-4e31-88f8-f042d95ab353",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2527a969-5cf8-4583-9f5b-ea69a37638e6",
+              "name": "=workflow",
+              "value": "={{ $json.workflow.name }}",
+              "type": "string"
+            },
+            {
+              "id": "136236e0-9be4-473a-8db5-618a17cc16e0",
+              "name": "=nodo",
+              "value": "={{ $json.execution.lastNodeExecuted }}",
+              "type": "string"
+            },
+            {
+              "id": "a084736e-f8aa-4ad3-a95d-86bfb95422d4",
+              "name": "=detalle",
+              "value": "={{ $json.execution.error.message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "d53b2ff4-64d6-4ede-9b16-6109cf9ccfcd",
+      "name": "Edit Fields"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "1e690b3d-293a-4534-929d-4a93ea0abd3d",
+  "meta": {
+    "instanceId": "4e844c350dcdf9bacf8be0aa0e7d4c360341a9e282c9454dff85636e41b9fc5d"
+  },
+  "nodeGroups": [],
+  "id": "u0k6ZbN3ojQYTEgp",
+  "tags": []
+}
