@@ -1,0 +1,96 @@
+{
+  "name": "Día 32 - Transformar datos con Code",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "ed0b82be-4a7e-4fda-abd6-a99c0828ba1e",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4d366961-ddb8-4140-a37f-cb266a90110a",
+              "name": "cliente",
+              "value": "  Franco  Boccella",
+              "type": "string"
+            },
+            {
+              "id": "66686d6b-29cd-4334-b673-2b1ce2e5482d",
+              "name": "servicio",
+              "value": "  TREnzas",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "e415b9c8-0bb0-422f-a164-eb375a5efea9",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const cliente = $json.cliente.trim().replace(/\\s+/g, \" \");\nconst servicio = $json.servicio.trim().toLowerCase();\nconst mensaje = \"Solicitud de \" + cliente + \" para \" + servicio;\n\nreturn {\n    json: {\n        cliente: cliente,\n        servicio: servicio,\n        mensaje: mensaje\n    }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        448,
+        0
+      ],
+      "id": "05aa479a-ef89-4588-9b69-371690496307",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "efb05380-1915-4669-8893-7fbab4051ae5",
+  "meta": {
+    "instanceId": "4e844c350dcdf9bacf8be0aa0e7d4c360341a9e282c9454dff85636e41b9fc5d"
+  },
+  "nodeGroups": [],
+  "id": "aFnZYBSFshCFMcyc",
+  "tags": []
+}
