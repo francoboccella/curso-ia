@@ -1,0 +1,142 @@
+{
+  "name": "Día 31 - Práctica Merge",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "f31986d5-b9e2-4f8c-b4cf-2e5f66094465",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "aa62dafe-2113-4879-9209-cb05630942ed",
+              "name": "id",
+              "value": "SOL-031",
+              "type": "string"
+            },
+            {
+              "id": "6d4ce62f-2669-4915-9dc9-3ccb9f07dbbb",
+              "name": "cliente",
+              "value": "Dayana",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        192,
+        -112
+      ],
+      "id": "f0b6ea9c-8e1f-401b-8631-a0d01457ed28",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "41e7bf7f-ad85-466c-9cf6-009d404bba70",
+              "name": "id",
+              "value": "SOL-031",
+              "type": "string"
+            },
+            {
+              "id": "241c8d12-fcec-4daf-9d7e-c5b28042e296",
+              "name": "servicio",
+              "value": "alisado",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        208,
+        128
+      ],
+      "id": "382b5970-a37e-476f-b4ed-74caee7248e7",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "id",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "b4cd8ec8-83ac-42a2-8e97-78180798dc8d",
+      "name": "Merge"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "224c12ff-bfd7-4c78-b8fc-5de8b8caa5d6",
+  "meta": {
+    "instanceId": "4e844c350dcdf9bacf8be0aa0e7d4c360341a9e282c9454dff85636e41b9fc5d"
+  },
+  "nodeGroups": [],
+  "id": "yGJEaDGKfF2UC5zz",
+  "tags": []
+}
