@@ -1,0 +1,111 @@
+{
+  "name": "Día 34 - Formulario de solicitudes en n8n",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "dia34-solicitud",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "06fc064b-bd6b-4178-b0a0-627318f2cc39",
+      "name": "Webhook",
+      "webhookId": "9655cfbb-9ac8-41bb-a21c-e3a97e05dbed"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1f3de5b4-8551-401b-89b9-b0ec94c66af7",
+              "name": "cliente",
+              "value": "={{ $json.body.cliente }}",
+              "type": "string"
+            },
+            {
+              "id": "4fedadc7-4d91-431a-bc76-04b6af45838a",
+              "name": "servicio",
+              "value": "={{ $json.body.servicio }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "cd289771-e4bc-4975-846c-bf849ae6c43d",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "535a9cc1-ea83-4013-8cfe-4e59b13db5e4",
+              "name": "mensaje",
+              "value": "={{ \"Solicitud de \" + $json.cliente + \" para \" + $json.servicio }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        448,
+        0
+      ],
+      "id": "17829fd6-34f6-4dad-9504-234a3ab3f419",
+      "name": "Edit Fields1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "9a0c6d23-5b2d-4bf8-89c4-a35ee28c848d",
+  "meta": {
+    "instanceId": "4e844c350dcdf9bacf8be0aa0e7d4c360341a9e282c9454dff85636e41b9fc5d"
+  },
+  "nodeGroups": [],
+  "id": "nG8AilAC7E9kZpGn",
+  "tags": []
+}
