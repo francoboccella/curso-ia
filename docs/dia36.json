@@ -1,0 +1,230 @@
+{
+  "name": "Día 36 - Leer mensajes de Gmail",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "da988a62-3654-4753-a127-47fc54febb7a",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "limit": 1,
+        "filters": {
+          "q": "in:anywhere subject:PRUEBA36B",
+          "readStatus": "both"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "edff55b7-91b9-4029-a0aa-ff746fb7a1dd",
+      "name": "Get many messages",
+      "webhookId": "60219de8-3069-4c80-bec1-21f4b9e2cde9",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Xwe2oJardam7jbnP",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "02a8c5cb-0a3d-48e7-850c-58ba2aab858e",
+              "name": "id_correo",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "8409ddc4-7778-46c4-bc41-769191df985d",
+              "name": "remitente",
+              "value": "={{ $json.From }}",
+              "type": "string"
+            },
+            {
+              "id": "ccc6227f-42fb-4735-84ea-cd7cb922b16f",
+              "name": "asunto",
+              "value": "={{ $json.Subject }}",
+              "type": "string"
+            },
+            {
+              "id": "929afaa4-9b27-472c-bae8-001c76336095",
+              "name": "resumen",
+              "value": "={{ $json.snippet }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        448,
+        0
+      ],
+      "id": "3861c57b-4277-404e-8649-26a76a8aee0c",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "messageId": "={{ $json.id_correo }}",
+        "simple": false,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        672,
+        0
+      ],
+      "id": "cdcba3a7-a506-4a69-98dc-7bb3bae59ea4",
+      "name": "Get a message",
+      "webhookId": "f4c4f94f-5dae-4572-abad-eb8b6f66d988",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Xwe2oJardam7jbnP",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8bf2788c-cf47-485f-8faf-3131445ea615",
+              "name": "id_correo",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "cb12c344-bc5e-4726-af61-0728f09a8d5b",
+              "name": "remitente",
+              "value": "={{ $json.from.value[0].address }}",
+              "type": "string"
+            },
+            {
+              "id": "851254a4-a4a7-4277-95cb-af66534e2bd6",
+              "name": "asunto",
+              "value": "={{ $json.subject }}",
+              "type": "string"
+            },
+            {
+              "id": "db9284d9-6d05-420c-a0e7-ef505b9263fd",
+              "name": "contenido",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        896,
+        0
+      ],
+      "id": "c8c13bf9-a5d1-4d6e-8f80-91c8752cf0d7",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const datos = {};\n\nfor (const linea of $json.contenido.split(\"\\n\")) {\n    const separador = linea.indexOf(\":\");\n\n    if (separador === -1) {\n        continue;\n    }\n\n    const campo = linea.slice(0, separador).trim().toLowerCase();\n    const valor = linea.slice(separador + 1).trim();\n\n    datos[campo] = valor;\n}\n\nreturn {\n    json: {\n        id_correo: $json.id_correo,\n        remitente: $json.remitente,\n        asunto: $json.asunto,\n        cliente: datos.cliente,\n        servicio: datos.servicio,\n        solicitud: datos.solicitud\n    }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1088,
+        0
+      ],
+      "id": "9aedf9c1-9505-4940-b04e-2741b1fc0776",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get many messages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many messages": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Get a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a message": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "523350c9-872f-4c71-849c-b1247b476321",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4e844c350dcdf9bacf8be0aa0e7d4c360341a9e282c9454dff85636e41b9fc5d"
+  },
+  "nodeGroups": [],
+  "id": "Y4ck1MgXUQMUoT48",
+  "tags": []
+}
