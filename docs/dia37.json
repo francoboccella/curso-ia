@@ -1,0 +1,348 @@
+{
+  "name": "Día 37 - Registro de solicitudes",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -192,
+        -112
+      ],
+      "id": "868b16a6-ce74-4f31-ba8c-a65cef7aedec",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0781c6ef-0255-47c6-86cd-3468e4b170c4",
+              "name": "id_solicitud",
+              "value": "SOL-037",
+              "type": "string"
+            },
+            {
+              "id": "f063d2d7-243b-42ce-9592-41d1198738dc",
+              "name": "cliente",
+              "value": "Dayana",
+              "type": "string"
+            },
+            {
+              "id": "ab70702e-09a2-4645-9fab-8bdafea02a0e",
+              "name": "servicio",
+              "value": "trenzas",
+              "type": "string"
+            },
+            {
+              "id": "78814e2c-4b2e-4858-8cc5-25fee820eb35",
+              "name": "solicitud",
+              "value": "consultar disponibilidad",
+              "type": "string"
+            },
+            {
+              "id": "80ba9155-77e2-4249-a931-263d140dea0f",
+              "name": "estado",
+              "value": "pendiente",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        0,
+        80
+      ],
+      "id": "f59153a4-f39f-4361-88c9-9d742d9152c3",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1KTzzdgOR46YQo1xzrggd6PIcIa4bG8JpyP_BjtG9tdE",
+          "mode": "list",
+          "cachedResultName": "Día 37 - Registro de solicitudes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1KTzzdgOR46YQo1xzrggd6PIcIa4bG8JpyP_BjtG9tdE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1KTzzdgOR46YQo1xzrggd6PIcIa4bG8JpyP_BjtG9tdE/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id_solicitud": "={{ $json.id_solicitud }}",
+            "cliente": "={{ $json.cliente }}",
+            "servicio": "={{ $json.servicio }}",
+            "solicitud": "={{ $json.solicitud }}",
+            "estado": "={{ $json.estado }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "id_solicitud",
+              "displayName": "id_solicitud",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "cliente",
+              "displayName": "cliente",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "servicio",
+              "displayName": "servicio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "solicitud",
+              "displayName": "solicitud",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "estado",
+              "displayName": "estado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        192,
+        80
+      ],
+      "id": "7fe0a711-f7e2-40b9-98dc-083eef65bc73",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "OpTrePjVDfK3VMNv",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1KTzzdgOR46YQo1xzrggd6PIcIa4bG8JpyP_BjtG9tdE",
+          "mode": "list",
+          "cachedResultName": "Día 37 - Registro de solicitudes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1KTzzdgOR46YQo1xzrggd6PIcIa4bG8JpyP_BjtG9tdE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1KTzzdgOR46YQo1xzrggd6PIcIa4bG8JpyP_BjtG9tdE/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "id_solicitud",
+              "lookupValue": "SOL-037"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        32,
+        -112
+      ],
+      "id": "b2dcf49c-9160-4994-bab8-15dfc037a1c3",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "OpTrePjVDfK3VMNv",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1KTzzdgOR46YQo1xzrggd6PIcIa4bG8JpyP_BjtG9tdE",
+          "mode": "list",
+          "cachedResultName": "Día 37 - Registro de solicitudes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1KTzzdgOR46YQo1xzrggd6PIcIa4bG8JpyP_BjtG9tdE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1KTzzdgOR46YQo1xzrggd6PIcIa4bG8JpyP_BjtG9tdE/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id_solicitud": "={{ $json.id_solicitud }}",
+            "cliente": "={{ $json.cliente }}",
+            "servicio": "={{ $json.servicio }}",
+            "solicitud": "={{ $json.solicitud }}",
+            "estado": "revisada"
+          },
+          "matchingColumns": [
+            "id_solicitud"
+          ],
+          "schema": [
+            {
+              "id": "id_solicitud",
+              "displayName": "id_solicitud",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "cliente",
+              "displayName": "cliente",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "servicio",
+              "displayName": "servicio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "solicitud",
+              "displayName": "solicitud",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "estado",
+              "displayName": "estado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        256,
+        -112
+      ],
+      "id": "658223df-6c50-469e-9710-0867a80ce16a",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "OpTrePjVDfK3VMNv",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "24089c31-6097-4ed1-9998-9ead054d7783",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4e844c350dcdf9bacf8be0aa0e7d4c360341a9e282c9454dff85636e41b9fc5d"
+  },
+  "nodeGroups": [],
+  "id": "eEhan5alccDqTWjs",
+  "tags": []
+}
