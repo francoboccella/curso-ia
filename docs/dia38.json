@@ -1,0 +1,156 @@
+{
+  "name": "Día 38 - Disponibilidad y eventos en Google Calendar",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "e7cf6ca4-9bf4-468c-8a0d-4c858fdccf46",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "resource": "calendar",
+        "calendar": {
+          "__rl": true,
+          "value": "f1b8d5ca22c5abd0fc43ec2c9bebb148959dd9760db17e6d51a0e8c547753b1a@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "Curso IA - Prácticas"
+        },
+        "timeMin": "={{ \"2026-11-19T15:00:00-03:00\" }}",
+        "timeMax": "={{ \"2026-11-19T16:00:00-03:00\" }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.4,
+      "position": [
+        224,
+        0
+      ],
+      "id": "9c86410a-33c8-4d7a-b50c-d7692bea89ec",
+      "name": "Get availability in a calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "HGynzBfy8S8ii8Ji",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "f1b8d5ca22c5abd0fc43ec2c9bebb148959dd9760db17e6d51a0e8c547753b1a@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "Curso IA - Prácticas"
+        },
+        "start": "={{ \"2026-11-19T15:00:00-03:00\" }}",
+        "end": "={{ \"2026-11-19T16:00:00-03:00\" }}",
+        "additionalFields": {
+          "summary": "Turno de prueba - Día 38"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.4,
+      "position": [
+        640,
+        -96
+      ],
+      "id": "6e0b3e2b-1d74-4cb2-97f4-6f327687cf15",
+      "name": "Create an event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "HGynzBfy8S8ii8Ji",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 4
+          },
+          "conditions": [
+            {
+              "id": "5743cbdb-d89c-4379-a96a-a816e4ad6c69",
+              "leftValue": "={{ $json.available }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.4,
+      "position": [
+        432,
+        0
+      ],
+      "id": "19ed9c98-e5b8-4882-9c9c-36b160d96afa",
+      "name": "If"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get availability in a calendar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get availability in a calendar": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Create an event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "56addc2b-4255-4a51-bafa-f4296b25c046",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4e844c350dcdf9bacf8be0aa0e7d4c360341a9e282c9454dff85636e41b9fc5d"
+  },
+  "nodeGroups": [],
+  "id": "MOA4I5Qe2wqXkMWf",
+  "tags": []
+}
