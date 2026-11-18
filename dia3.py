@@ -2,8 +2,8 @@ tipo = input("pago vencido, actualizar datos o consulta general")
 if tipo == "pago vencido":
     print("prioridad alta")
 elif tipo == "actualizar datos":
-    print("prioridad normal")
+    print("prioridad media")
 elif tipo == "consulta general":
     print("prioridad baja")
 else:
-    print("tipo no reconocido")
+    print("Tipo de consulta no reconocido")
