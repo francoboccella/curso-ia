@@ -1,0 +1,504 @@
+{
+  "name": "Día 41 - Solicitudes de turno desde Gmail.",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "44d16b1f-57fb-4511-b6fb-f0a2e441ddba",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "limit": 1,
+        "filters": {
+          "q": "in:inbox subject:PRUEBA41",
+          "readStatus": "both"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "a6ed4a8e-0c37-408d-97e1-d42f311d569b",
+      "name": "Get many messages",
+      "webhookId": "dc3491be-24c9-4045-ab79-961a08e43534",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Xwe2oJardam7jbnP",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "messageId": "={{ $json.id }}",
+        "simple": false,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        448,
+        0
+      ],
+      "id": "de173bc5-9d31-422f-8068-35f03a2b8446",
+      "name": "Get a message",
+      "webhookId": "363152b1-e9fc-4ae9-b50c-7a9575f55955",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Xwe2oJardam7jbnP",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const campos = {};\n\nfor (const linea of $json.text.split(\"\\n\")) {\n  const separador = linea.indexOf(\":\");\n  if (separador === -1) continue;\n\n  const nombre = linea.slice(0, separador).trim().toLowerCase();\n  campos[nombre] = linea.slice(separador + 1).trim();\n}\n\nreturn {\n  json: {\n    id_correo: $json.id,\n    cliente: campos.cliente,\n    servicio: campos.servicio,\n    fecha: campos.fecha,\n    hora: campos.hora,\n    duracion_minutos: parseInt(campos[\"duración\"], 10)\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        0
+      ],
+      "id": "602659e5-c54d-414f-af90-d748f2414fe4",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1zSz7D4Pt-yw59i-iON-EdbRcVvVE9vGB7WA05uxHvEY",
+          "mode": "list",
+          "cachedResultName": "Día 41 - Solicitudes de turno",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zSz7D4Pt-yw59i-iON-EdbRcVvVE9vGB7WA05uxHvEY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zSz7D4Pt-yw59i-iON-EdbRcVvVE9vGB7WA05uxHvEY/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id_correo": "={{ $json.id_correo }}",
+            "cliente": "={{ $json.cliente }}",
+            "servicio": "={{ $json.servicio }}",
+            "fecha": "={{ $json.fecha }}",
+            "hora\t": "={{ $json.hora }}",
+            "duracion_minutos": "={{ $json.duracion_minutos }}",
+            "estado": "pendiente"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "id_correo",
+              "displayName": "id_correo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "cliente",
+              "displayName": "cliente",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "servicio",
+              "displayName": "servicio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "fecha",
+              "displayName": "fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "hora\t",
+              "displayName": "hora\t",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "duracion_minutos",
+              "displayName": "duracion_minutos",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "estado",
+              "displayName": "estado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1040,
+        -240
+      ],
+      "id": "a01fbc0a-c0b1-43fe-86ea-6df9c861996d",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "OpTrePjVDfK3VMNv",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "calendar",
+        "calendar": {
+          "__rl": true,
+          "value": "f1b8d5ca22c5abd0fc43ec2c9bebb148959dd9760db17e6d51a0e8c547753b1a@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "Curso IA - Prácticas"
+        },
+        "timeMin": "=\t{{ $json.fecha + 'T' + $json.hora + ':00-03:00' }}",
+        "timeMax": "={{ DateTime.fromISO($json.fecha + 'T' + $json.hora + ':00-03:00', { setZone: true }).plus({ minutes: $json.duracion_minutos }).toISO() }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.4,
+      "position": [
+        896,
+        0
+      ],
+      "id": "dce189ff-7f05-49d4-825f-6f742bb0916a",
+      "name": "Get availability in a calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "HGynzBfy8S8ii8Ji",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 4
+          },
+          "conditions": [
+            {
+              "id": "153b081e-981c-4924-b22d-8d4c12939599",
+              "leftValue": "={{ $json.available }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.4,
+      "position": [
+        1120,
+        0
+      ],
+      "id": "4b7947f6-d6cc-4abb-9d90-6bea3cdca916",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "f1b8d5ca22c5abd0fc43ec2c9bebb148959dd9760db17e6d51a0e8c547753b1a@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "Curso IA - Prácticas"
+        },
+        "start": "={{ $('Code in JavaScript').item.json.fecha + 'T' + $('Code in JavaScript').item.json.hora + ':00-03:00' }}",
+        "end": "={{ DateTime.fromISO($('Code in JavaScript').item.json.fecha + 'T' + $('Code in JavaScript').item.json.hora + ':00-03:00', { setZone: true }).plus({ minutes: $('Code in JavaScript').item.json.duracion_minutos }).toISO() }}",
+        "additionalFields": {
+          "summary": "={{ 'Turno de prueba - ' + $('Code in JavaScript').item.json.cliente + ' - ' + $('Code in JavaScript').item.json.servicio }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.4,
+      "position": [
+        1344,
+        -96
+      ],
+      "id": "5e3c5c55-0f10-49a7-a1ac-9f2f0f5b2c42",
+      "name": "Create an event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "HGynzBfy8S8ii8Ji",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1zSz7D4Pt-yw59i-iON-EdbRcVvVE9vGB7WA05uxHvEY",
+          "mode": "list",
+          "cachedResultName": "Día 41 - Solicitudes de turno",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zSz7D4Pt-yw59i-iON-EdbRcVvVE9vGB7WA05uxHvEY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zSz7D4Pt-yw59i-iON-EdbRcVvVE9vGB7WA05uxHvEY/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id_correo": "={{ $('Code in JavaScript').item.json.id_correo }}",
+            "estado": "confirmado"
+          },
+          "matchingColumns": [
+            "id_correo"
+          ],
+          "schema": [
+            {
+              "id": "id_correo",
+              "displayName": "id_correo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "cliente",
+              "displayName": "cliente",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "servicio",
+              "displayName": "servicio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "fecha",
+              "displayName": "fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "hora\t",
+              "displayName": "hora\t",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "duracion_minutos",
+              "displayName": "duracion_minutos",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "estado",
+              "displayName": "estado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1568,
+        -96
+      ],
+      "id": "5450b999-f05c-41af-880b-0a257af316bb",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "OpTrePjVDfK3VMNv",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get many messages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many messages": {
+      "main": [
+        [
+          {
+            "node": "Get a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a message": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Get availability in a calendar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get availability in a calendar": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Create an event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an event": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "025fa6b5-39e6-46b0-9cee-cbbe5ee499b7",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4e844c350dcdf9bacf8be0aa0e7d4c360341a9e282c9454dff85636e41b9fc5d"
+  },
+  "nodeGroups": [],
+  "id": "0Td7I83hynduUn8g",
+  "tags": []
+}
